@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>noa — AI Task Scheduler</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+
+    body {
+      background-color: #faf9f7;
+      color: #2a2825;
+    }
+
+    /* Pulse dot */
+    .pulse-dot {
+      position: relative;
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      margin-left: 8px;
+      border-radius: 9999px;
+      background-color: #4f7cff;
+    }
+
+    .pulse-dot::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 9999px;
+      background-color: #4f7cff;
+      opacity: 0.5;
+      transform: scale(1);
+      animation: pulse-ring 2s infinite ease-out;
+    }
+
+    @keyframes pulse-ring {
+      0% { transform: scale(1); opacity: 0.5; }
+      70% { transform: scale(2.4); opacity: 0; }
+      100% { transform: scale(2.4); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 bg-[#faf9f7]">
+    <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" class="text-3xl font-bold tracking-tight text-[#2a2825]">noa<span class="inline-block w-2.5 h-2.5 rounded-full bg-[#4f7cff] ml-1 align-middle"></span></a>
+    <nav class="absolute left-1/2 -translate-x-1/2 flex items-center gap-8">
+      <a href="#providers" onclick="document.getElementById('providers').scrollIntoView({behavior:'smooth'});return false;" class="text-sm font-medium text-[#7a7670] hover:text-[#2a2825] transition">Providers</a>
+      <a href="#preview" onclick="document.getElementById('preview').scrollIntoView({behavior:'smooth'});return false;" class="text-sm font-medium text-[#7a7670] hover:text-[#2a2825] transition">Preview</a>
+      <a href="#download" onclick="document.getElementById('download').scrollIntoView({behavior:'smooth'});return false;" class="text-sm font-medium text-[#7a7670] hover:text-[#2a2825] transition">Download</a>
+    </nav>
+    <button onclick="document.getElementById('coming-soon-modal').classList.remove('hidden')" class="bg-[#2a2825] text-white px-5 py-2 rounded-xl text-sm font-medium hover:bg-[#111] transition flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download for macOS
+    </button>
+  </header>
+
+  <!-- HERO -->
+  <section class="min-h-screen flex flex-col justify-center items-center text-center px-6 pt-20">
+    <div class="mb-6">
+      <h1 class="text-7xl font-bold tracking-tight text-[#2a2825]">
+        noa<span class="pulse-dot"></span>
+      </h1>
+    </div>
+
+    <h2 class="text-3xl md:text-5xl font-medium max-w-3xl leading-tight">
+      Noa runs your AI tasks. Automatically.
+    </h2>
+
+    <p class="mt-6 text-[#7a7670] max-w-xl text-lg">
+      Schedule prompts. Let Noa execute them. Get results — without lifting a finger.
+    </p>
+
+    <div class="mt-10 flex gap-4">
+      <button onclick="document.getElementById('coming-soon-modal').classList.remove('hidden')" class="bg-[#2a2825] text-white px-6 py-3 rounded-xl font-medium hover:bg-[#111] transition flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download for macOS
+      </button>
+      <a href="https://github.com/dominicmartineau/noa" target="_blank" rel="noopener noreferrer" class="border border-[#e2e0d9] px-6 py-3 rounded-xl font-medium hover:border-[#9a9690] transition flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        View on GitHub
+      </a>
+    </div>
+  </section>
+
+  <!-- AI PROVIDERS -->
+  <section id="providers" class="min-h-screen px-6 py-24 flex flex-col justify-center items-center">
+    <p class="text-sm font-semibold text-[#4f7cff] uppercase tracking-widest mb-3">Multi-provider</p>
+    <h2 class="text-3xl font-semibold text-center mb-4">Works with your favorite AI</h2>
+    <p class="text-[#9a9690] text-lg text-center max-w-xl mb-12">Connect Noa to the AI provider you already use. No lock-in, no switching costs — just plug in and schedule.</p>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 w-full max-w-4xl">
+
+      <!-- Claude -->
+      <div class="bg-white rounded-2xl border border-[#e2e0d9] p-6 flex flex-col items-center gap-3 transition">
+        <div class="w-14 h-14 flex items-center justify-center rounded-xl overflow-hidden">
+          <img src="claude-icon.webp" alt="Claude" class="w-full h-full object-contain">
+        </div>
+        <div class="text-center">
+          <p class="font-semibold text-[#2a2825]">Claude</p>
+          <p class="text-sm text-[#9a9690]">Anthropic</p>
+        </div>
+      </div>
+
+      <!-- Codex -->
+      <div class="bg-white rounded-2xl border border-[#e2e0d9] p-6 flex flex-col items-center gap-3 transition">
+        <div class="w-14 h-14 flex items-center justify-center rounded-xl overflow-hidden">
+          <img src="codex-icon.webp" alt="Codex" class="w-full h-full object-contain">
+        </div>
+        <div class="text-center">
+          <p class="font-semibold text-[#2a2825]">Codex</p>
+          <p class="text-sm text-[#9a9690]">OpenAI</p>
+        </div>
+      </div>
+
+      <!-- Gemini -->
+      <div class="bg-white rounded-2xl border border-[#e2e0d9] p-6 flex flex-col items-center gap-3 transition">
+        <div class="w-14 h-14 flex items-center justify-center rounded-xl">
+          <svg viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7 text-black"><path d="M12 0C12 6.627 6.627 12 0 12c6.627 0 12 5.373 12 12 0-6.627 5.373-12 12-12-6.627 0-12-5.373-12-12Z"></path></svg>
+        </div>
+        <div class="text-center">
+          <p class="font-semibold text-[#2a2825]">Gemini</p>
+          <p class="text-sm text-[#9a9690]">Google</p>
+        </div>
+      </div>
+
+      <!-- Ollama -->
+      <div class="bg-white rounded-2xl border border-[#e2e0d9] p-6 flex flex-col items-center gap-3 transition relative pointer-events-none select-none" style="filter: blur(1.5px); opacity: 0.6;">
+        <div class="w-14 h-14 flex items-center justify-center rounded-xl overflow-hidden">
+          <img src="ollama-icon.svg" alt="Ollama" class="w-full h-full object-contain">
+        </div>
+        <div class="text-center">
+          <p class="font-semibold text-[#2a2825]">Ollama</p>
+          <p class="text-sm text-[#9a9690]">Ollama</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- APP PREVIEW (macOS mock) -->
+  <section id="preview" class="min-h-screen px-6 py-24 flex flex-col justify-center items-center bg-[#efede7]">
+    <p class="text-sm font-semibold text-[#4f7cff] uppercase tracking-widest mb-3">See it in action</p>
+    <h2 class="text-3xl font-semibold text-center mb-12">A simple interface, powerful automation</h2>
+    <div class="w-full max-w-5xl bg-white rounded-2xl border border-[#e2e0d9] overflow-hidden">
+
+      <!-- macOS top bar -->
+      <div class="flex items-center gap-2 px-4 py-3 border-b border-gray-100 bg-gray-50">
+        <div class="w-3 h-3 bg-red-400 rounded-full"></div>
+        <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
+        <div class="w-3 h-3 bg-green-400 rounded-full"></div>
+        <div class="ml-4 text-sm text-[#9a9690]">Noa</div>
+      </div>
+
+      <!-- preview placeholder -->
+      <div class="relative w-full" style="aspect-ratio: 16/9;">
+        <div class="absolute inset-0 flex flex-col items-center justify-center gap-4 text-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#c8c5be" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          <p class="text-xl font-semibold text-[#9a9690]">Preview coming soon</p>
+          <p class="text-sm text-[#c8c5be] max-w-xs">Screenshots and a live demo are on their way. Stay tuned.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="download" class="min-h-screen px-6 py-24 flex flex-col justify-center items-center text-center">
+    <p class="text-sm font-semibold text-[#4f7cff] uppercase tracking-widest mb-3">Get started</p>
+    <h2 class="text-4xl md:text-5xl font-semibold max-w-2xl leading-tight mb-6">Your AI tasks, on autopilot.</h2>
+    <p class="text-[#9a9690] text-lg max-w-md mb-10">Download Noa for macOS and start scheduling your first AI task in minutes.</p>
+    <div class="flex gap-4">
+      <button onclick="document.getElementById('coming-soon-modal').classList.remove('hidden')" class="bg-[#2a2825] text-white px-8 py-4 rounded-xl font-medium text-lg hover:bg-[#111] transition flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download for macOS
+      </button>
+      <a href="https://github.com/dominicmartineau/noa" target="_blank" rel="noopener noreferrer" class="border border-[#e2e0d9] px-8 py-4 rounded-xl font-medium text-lg hover:border-[#9a9690] transition flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        View on GitHub
+      </a>
+    </div>
+    <p class="mt-10 text-[#9a9690] text-sm">
+      <span id="download-count" class="font-semibold text-[#2a2825]">—</span> downloads and counting
+    </p>
+  </section>
+
+  <script>
+    fetch('https://api.github.com/repos/dominicmartineau/noa/releases')
+      .then(r => r.json())
+      .then(releases => {
+        const total = releases.reduce((sum, release) =>
+          sum + release.assets.reduce((s, a) => s + a.download_count, 0), 0);
+        const el = document.getElementById('download-count');
+        el.textContent = total.toLocaleString('en-US');
+      })
+      .catch(() => {
+        document.getElementById('download-count').textContent = '—';
+      });
+  </script>
+
+  <!-- COMING SOON MODAL -->
+  <div id="coming-soon-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center px-6">
+    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="document.getElementById('coming-soon-modal').classList.add('hidden')"></div>
+    <div class="relative bg-[#faf9f7] rounded-2xl border border-[#e2e0d9] shadow-2xl p-10 max-w-md w-full text-center">
+      <p class="text-4xl mb-5">🚀</p>
+      <h3 class="text-2xl font-semibold text-[#2a2825] mb-3">Coming soon to macOS</h3>
+      <p class="text-[#7a7670] text-base leading-relaxed">The first public release is on its way. Follow the progress on GitHub and check back soon!</p>
+      <div class="mt-8 flex flex-col gap-3">
+        <a href="https://github.com/dominicmartineau/noa" target="_blank" rel="noopener noreferrer" class="border border-[#e2e0d9] px-6 py-3 rounded-xl font-medium hover:border-[#9a9690] transition w-full flex items-center justify-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          Follow on GitHub
+        </a>
+        <button onclick="document.getElementById('coming-soon-modal').classList.add('hidden')" class="bg-[#2a2825] text-white px-6 py-3 rounded-xl font-medium hover:bg-[#111] transition w-full">Got it</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="text-center pb-12 text-[#9a9690] text-sm">
+    Made with <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-4 h-4 text-[#c0614a] fill-current" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  </footer>
+
+</body>
+</html>
+
